@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import logo from '../../images/Logo.svg';
 import { Link } from 'react-router-dom';
+import { AuthContex } from '../Authprovider/Authprovider';
+
+
 
 const Header = () => {
+    const {user,logout}= useContext(AuthContex)
+
+    const handlelogout=()=>{
+        logout()
+        .then(res=>{})
+        .catch(error=>console.error(error))
+    }
     return (
         <nav className='header'>
             <img src={logo} alt="" />
@@ -12,7 +22,9 @@ const Header = () => {
                 <Link to="/orders">Orders</Link>
                 <Link to="/inventory">Inventory</Link>
                 <Link to="/login">Login</Link>
+                <Link to="/signup">Sign up</Link>
             </div>
+            {user && <span>{user.email} <button onClick={handlelogout}>Logout</button></span> }
         </nav>
     );
 };
